@@ -1,0 +1,108 @@
+.neon
+.env.local
+
+# ==========================================
+# React + Node.js + Groq + Neon PostgreSQL
+# Root .gitignore
+# ==========================================
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment variables and secrets
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!.env.*.example
+!**/.env.example
+!**/.env.*.example
+
+# Never commit API keys, database URLs, or JWT secrets
+# Keep GROQ_API_KEY, DATABASE_URL, JWT_SECRET private.
+
+# Frontend build output (React + Vite)
+dist/
+**/dist/
+build/
+**/build/
+out/
+**/out/
+
+# Backend build output
+backend/dist/
+backend/build/
+
+# Vite and bundler caches
+.vite/
+**/.vite/
+.cache/
+.parcel-cache/
+.turbo/
+
+# TypeScript build information
+*.tsbuildinfo
+
+# Logs
+logs/
+**/logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Test results and coverage
+coverage/
+**/coverage/
+.nyc_output/
+
+# Prisma generated client
+# Keep schema.prisma and migrations tracked.
+backend/src/generated/prisma/
+backend/node_modules/.prisma/
+
+# Local database files and backups
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.dump
+*.bak
+*.backup
+
+# Uploaded files and temporary runtime data
+backend/uploads/*
+!backend/uploads/.gitkeep
+uploads/*
+!uploads/.gitkeep
+tmp/
+temp/
+
+# Deployment metadata
+.vercel/
+.netlify/
+.firebase/
+.serverless/
+
+# IDE and editor files
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.example.json
+*.swp
+*.swo
+*.suo
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Python artifacts (if experiments are added)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/

@@ -1,0 +1,921 @@
+ 
+:root {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: #172033;
+  background: #f6f8fc;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --gl-sidebar-width: 260px;
+  --gl-sidebar-mobile-width: min(280px, 85vw);
+  --gl-primary: #3659d9;
+  --gl-primary-soft: #e9efff;
+  --gl-border: #e8ecf3;
+  --gl-muted: #647084;
+  --gl-page-bg: #f6f8fc;
+  --gl-header-height: 82px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--gl-page-bg);
+  color: #172033;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.gl-app {
+  min-height: 100vh;
+}
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.gl-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 1050;
+
+  display: flex;
+  flex-direction: column;
+
+  width: var(--gl-sidebar-width);
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd3e1 transparent;
+
+  background: #fff;
+  border-right: 1px solid var(--gl-border);
+
+  -webkit-overflow-scrolling: touch;
+  transition:
+    transform 0.25s ease,
+    visibility 0.25s ease;
+}
+
+.gl-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.gl-sidebar::-webkit-scrollbar-thumb {
+  background: #cbd3e1;
+  border-radius: 10px;
+}
+
+.gl-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gl-sidebar > div:first-child {
+  flex-shrink: 0;
+}
+
+.gl-sidebar .nav {
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.gl-sidebar .mt-auto {
+  flex-shrink: 0;
+  margin-top: auto !important;
+}
+
+.gl-brand-icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+
+  background: var(--gl-primary-soft);
+  color: var(--gl-primary);
+}
+
+.gl-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  min-width: 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+
+  color: var(--gl-muted);
+  text-decoration: none;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.gl-nav-link:hover {
+  color: var(--gl-primary);
+  background: #f3f5ff;
+}
+
+.gl-nav-link.active {
+  color: var(--gl-primary);
+  background: var(--gl-primary-soft);
+  font-weight: 600;
+}
+
+.gl-nav-link svg {
+  flex-shrink: 0;
+}
+
+.gl-sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  min-width: 0;
+  padding: 12px;
+
+  border: 1px solid var(--gl-border);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.gl-avatar {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+
+  background: var(--gl-primary-soft);
+  color: var(--gl-primary);
+  font-weight: 700;
+}
+
+/* Desktop: sidebar remains visible. Close/backdrop are hidden. */
+.gl-mobile-close,
+.gl-sidebar-backdrop {
+  display: none !important;
+}
+
+/* =========================================
+   MAIN CONTENT AND TOPBAR
+========================================= */
+
+.gl-main {
+  min-width: 0;
+  min-height: 100vh;
+  margin-left: var(--gl-sidebar-width);
+  background: var(--gl-page-bg);
+}
+
+.gl-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+
+  display: flex;
+  align-items: center;
+
+  min-height: var(--gl-header-height);
+  background: #fff;
+  border-bottom: 1px solid var(--gl-border);
+}
+
+.gl-topbar > div {
+  min-width: 0;
+}
+
+.gl-menu-toggle {
+  display: none !important;
+}
+
+.gl-icon-button {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+
+  width: 40px;
+  height: 40px;
+  padding: 0;
+}
+
+.gl-content {
+  min-width: 0;
+  padding: 32px;
+}
+
+/* Prevent wide tables and long content from breaking the layout. */
+.gl-content > * {
+  min-width: 0;
+}
+
+.gl-content .table-responsive {
+  max-width: 100%;
+}
+
+/* =========================================
+   DASHBOARD STAT CARDS
+========================================= */
+
+.gl-stat-card {
+  height: 100%;
+  min-width: 0;
+  padding: 22px;
+
+  border: 1px solid var(--gl-border);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.gl-stat-icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+
+  background: var(--gl-primary-soft);
+  color: var(--gl-primary);
+}
+
+/* =========================================
+   TABLET AND MOBILE DRAWER
+========================================= */
+
+@media (max-width: 991.98px) {
+  .gl-sidebar {
+    width: var(--gl-sidebar-mobile-width);
+    max-width: 100%;
+    height: 100vh;
+    height: 100dvh;
+
+    transform: translateX(-100%);
+    visibility: hidden;
+    pointer-events: none;
+
+    z-index: 1050;
+    border-right: 1px solid var(--gl-border);
+    box-shadow: none;
+  }
+
+  .gl-sidebar.gl-sidebar-open {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+    box-shadow: 12px 0 40px rgba(15, 23, 42, 0.12);
+  }
+
+  .gl-sidebar .nav {
+    display: flex !important;
+    flex-direction: column;
+    gap: 4px !important;
+    grid-template-columns: none;
+  }
+
+  .gl-nav-link {
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .gl-sidebar-backdrop {
+    display: block !important;
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+
+    background: rgba(15, 23, 42, 0.48);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    z-index: 1040;
+  }
+
+  .gl-menu-toggle {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 42px;
+    height: 42px;
+    padding: 0;
+  }
+
+  .gl-mobile-close {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 38px;
+    height: 38px;
+    padding: 0;
+  }
+
+  .gl-main {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .gl-topbar {
+    min-height: 72px;
+    padding-right: 20px !important;
+    padding-left: 20px !important;
+  }
+
+  .gl-content {
+    padding: 24px;
+  }
+}
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 575.98px) {
+  .gl-topbar {
+    min-height: 68px;
+    gap: 10px;
+    padding: 12px !important;
+  }
+
+  .gl-topbar > div:first-child {
+    flex: 1;
+    gap: 10px !important;
+    min-width: 0;
+  }
+
+  .gl-topbar > div:first-child > div {
+    min-width: 0;
+  }
+
+  .gl-topbar .fw-semibold {
+    font-size: 14px;
+  }
+
+  .gl-topbar .small {
+    font-size: 11px;
+  }
+
+  .gl-topbar > div:last-child {
+    flex-shrink: 0;
+    gap: 6px !important;
+  }
+
+  .gl-logout-label {
+    display: none;
+  }
+
+  .gl-content {
+    padding: 16px;
+  }
+
+  .gl-stat-card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .gl-sidebar .px-4 {
+    padding-right: 16px !important;
+    padding-left: 16px !important;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* ---------------------------- */
+/* for the floating FloatingAIAssistant.tsx */
+
+/* Floating GradeLens AI assistant */
+ 
+/* =========================================
+   FloatingAIAssistant.tsx
+   GradeLens AI Floating Chat Widget
+========================================= */
+
+.gl-floating-ai {
+  --gl-ai-blue: #315fce;
+  --gl-ai-blue-dark: #244ca9;
+  --gl-ai-border: #e5eaf2;
+
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  left: auto;
+  z-index: 1080;
+  font-size: 14px;
+}
+
+/* Floating AI button */
+
+.gl-ai-fab {
+  width: 58px;
+  height: 58px;
+  border: none;
+  border-radius: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #fff;
+  background: linear-gradient(145deg, #4779e8, #2853b8);
+  box-shadow: 0 6px 20px rgb(49 95 206 / 25%);
+
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.gl-ai-fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 24px rgb(49 95 206 / 32%);
+}
+
+.gl-ai-fab:focus-visible,
+.gl-ai-icon-button:focus-visible,
+.gl-ai-send:focus-visible {
+  outline: 3px solid rgb(49 95 206 / 35%);
+  outline-offset: 3px;
+}
+
+/* Chat panel */
+
+.gl-ai-panel {
+  position: absolute;
+  right: 0;
+  bottom: 72px;
+  left: auto;
+
+  width: min(390px, calc(100vw - 32px));
+  height: min(570px, 72dvh);
+  min-height: 360px;
+  max-height: calc(100dvh - 110px);
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  color: var(--bs-body-color, #263247);
+  background: var(--bs-body-bg, #fff);
+  border: 1px solid var(--bs-border-color, var(--gl-ai-border));
+  border-radius: 20px;
+
+  box-shadow:
+    0 16px 48px rgb(26 43 76 / 14%),
+    0 3px 10px rgb(26 43 76 / 5%);
+
+  animation: gl-ai-panel-enter 180ms ease-out;
+}
+
+@keyframes gl-ai-panel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Header */
+
+.gl-ai-header {
+  flex-shrink: 0;
+  min-height: 72px;
+  padding: 14px 17px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  color: #fff;
+  background: linear-gradient(120deg, #315fce, #294eaa);
+}
+
+.gl-ai-avatar {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 13px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #fff;
+  background: rgb(255 255 255 / 14%);
+}
+
+.gl-ai-header .fw-semibold {
+  font-size: 15px;
+  letter-spacing: -0.2px;
+}
+
+.gl-ai-subtitle {
+  margin-top: 2px;
+  color: rgb(255 255 255 / 78%);
+  font-size: 11px;
+}
+
+.gl-ai-icon-button {
+  width: 35px;
+  height: 35px;
+  border: none;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: rgb(255 255 255 / 90%);
+  background: transparent;
+  cursor: pointer;
+}
+
+.gl-ai-icon-button:hover {
+  color: #fff;
+  background: rgb(255 255 255 / 15%);
+}
+
+/* Classroom selector */
+
+.gl-ai-classroom {
+  flex-shrink: 0;
+  padding: 12px 16px;
+
+  background: var(--bs-tertiary-bg, #f8faff);
+  border-bottom: 1px solid var(--bs-border-color, var(--gl-ai-border));
+}
+
+.gl-ai-classroom .form-label {
+  display: block;
+  margin-bottom: 6px;
+
+  color: var(--bs-secondary-color, #697586);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.45px;
+  text-transform: uppercase;
+}
+
+.gl-ai-classroom .form-select {
+  min-height: 39px;
+  border-color: var(--bs-border-color, #dce3ef);
+  border-radius: 10px;
+  font-size: 13px;
+  box-shadow: none;
+}
+
+.gl-ai-classroom .form-select:focus {
+  border-color: #8eacee;
+  box-shadow: 0 0 0 3px rgb(49 95 206 / 10%);
+}
+
+/* Conversation area */
+
+.gl-ai-messages {
+  flex: 1 1 auto;
+  min-height: 0;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+
+  padding: 18px 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  background: var(--bs-body-bg, #fff);
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #c8d2e2 transparent;
+}
+
+.gl-ai-messages::-webkit-scrollbar {
+  width: 5px;
+}
+
+.gl-ai-messages::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: #c8d2e2;
+}
+
+/* Welcome screen */
+
+.gl-ai-welcome {
+  width: 100%;
+  margin: auto 0;
+  padding: 12px 2px;
+  text-align: center;
+}
+
+.gl-ai-welcome-icon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 14px;
+
+  border: 1px solid #e0e9ff;
+  border-radius: 17px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--gl-ai-blue);
+  background: #eef3ff;
+}
+
+.gl-ai-welcome h6 {
+  margin-bottom: 8px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.gl-ai-welcome p {
+  max-width: 300px;
+  margin: 0 auto 18px;
+
+  color: var(--bs-secondary-color, #707b8d);
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+
+.gl-ai-suggestion {
+  display: block;
+  width: 100%;
+  margin-top: 9px;
+  padding: 11px 12px;
+
+  border: 1px solid var(--bs-border-color, #e4e9f1);
+  border-radius: 11px;
+
+  color: var(--bs-body-color, #354258);
+  background: var(--bs-body-bg, #fff);
+  text-align: left;
+  font-size: 12.5px;
+  line-height: 1.5;
+
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.gl-ai-suggestion:hover {
+  border-color: #b7c9f4;
+  background: #f5f8ff;
+}
+
+/* Message bubbles */
+
+.gl-ai-message {
+  max-width: 90%;
+  padding: 11px 13px;
+  border-radius: 14px;
+
+  font-size: 13px;
+  line-height: 1.7;
+
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.gl-ai-message-user {
+  align-self: flex-end;
+
+  color: #fff;
+  background: var(--gl-ai-blue);
+  border-bottom-right-radius: 5px;
+}
+
+.gl-ai-message-assistant {
+  align-self: flex-start;
+
+  color: var(--bs-body-color, #354258);
+  background: var(--bs-tertiary-bg, #f5f7fb);
+  border: 1px solid var(--bs-border-color, #e8ecf3);
+  border-bottom-left-radius: 5px;
+}
+
+.gl-ai-typing {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  color: var(--bs-secondary-color, #707b8d);
+  font-size: 12px;
+}
+
+.gl-ai-spinner {
+  flex-shrink: 0;
+  animation: gl-ai-spin 1s linear infinite;
+}
+
+@keyframes gl-ai-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error message */
+
+.gl-ai-error {
+  flex-shrink: 0;
+  margin: 0 14px 8px;
+  padding: 10px 12px;
+
+  border: 1px solid #f1c6cb;
+  border-radius: 10px;
+
+  color: #a52834;
+  background: #fff1f2;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Input composer */
+
+.gl-ai-composer {
+  flex-shrink: 0;
+  padding: 12px 14px 10px;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  border-top: 1px solid var(--bs-border-color, var(--gl-ai-border));
+  background: var(--bs-body-bg, #fff);
+}
+
+.gl-ai-composer .form-control {
+  min-width: 0;
+  min-height: 44px;
+  padding: 10px 13px;
+
+  border: 1px solid var(--bs-border-color, #dce3ef);
+  border-radius: 12px;
+
+  font-size: 13px;
+  box-shadow: none;
+}
+
+.gl-ai-composer .form-control:focus {
+  border-color: #8eacee;
+  box-shadow: 0 0 0 3px rgb(49 95 206 / 10%);
+}
+
+.gl-ai-send {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #fff;
+  background: var(--gl-ai-blue);
+  cursor: pointer;
+}
+
+.gl-ai-send:hover:not(:disabled) {
+  background: var(--gl-ai-blue-dark);
+}
+
+.gl-ai-send:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+/* Footer */
+
+.gl-ai-footer {
+  flex-shrink: 0;
+  padding: 0 12px 10px;
+
+  color: var(--bs-secondary-color, #818b9a);
+  background: var(--bs-body-bg, #fff);
+  font-size: 10px;
+  text-align: center;
+}
+
+/* Tablet */
+
+@media (max-width: 991.98px) {
+  .gl-floating-ai {
+    right: 18px;
+    bottom: 18px;
+    left: auto;
+  }
+
+  .gl-ai-panel {
+    width: min(390px, calc(100vw - 36px));
+    height: min(550px, 70dvh);
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 480px) {
+  .gl-floating-ai {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .gl-ai-fab {
+    width: 54px;
+    height: 54px;
+    border-radius: 17px;
+  }
+
+  .gl-ai-panel {
+    right: 0;
+    bottom: 66px;
+
+    width: calc(100vw - 24px);
+    height: min(520px, 68dvh);
+    min-height: 320px;
+
+    border-radius: 17px;
+  }
+
+  .gl-ai-messages {
+    padding: 14px 12px;
+  }
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .gl-ai-panel {
+    animation: none;
+  }
+
+  .gl-ai-fab,
+  .gl-ai-icon-button,
+  .gl-ai-suggestion,
+  .gl-ai-send {
+    transition: none;
+  }
+}

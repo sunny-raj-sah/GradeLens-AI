@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  TEACHER
+  STUDENT
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(STUDENT)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  taughtClasses  Classroom[] @relation("ClassroomTeacher")
+  studentProfile Student?
+   proctorAssignments StudentProctorAssignment[] @relation("StudentProctor")
+}
+
+model Classroom {
+  id           String   @id @default(cuid())
+  name         String
+  gradeLevel   String
+  section      String?
+  academicYear String
+  teacherId    String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  teacher   User       @relation("ClassroomTeacher", fields: [teacherId], references: [id])
+  students  Student[]
+  homeworks Homework[]
+
+  @@index([teacherId])
+}
+
+model Student {
+  id          String   @id @default(cuid())
+  fullName    String
+  rollNumber  String
+  email       String?  @unique
+  classroomId String
+  userId      String?  @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  classroom           Classroom            @relation(fields: [classroomId], references: [id])
+  user                User?                @relation(fields: [userId], references: [id])
+  homeworkSubmissions HomeworkSubmission[]
+  quizResults         QuizResult[]
+
+  @@unique([classroomId, rollNumber])
+  @@index([classroomId])
+  proctorAssignment StudentProctorAssignment?
+}
+
+model Homework {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  dueDate     DateTime?
+  classroomId String
+  createdAt   DateTime  @default(now())
+
+  classroom   Classroom            @relation(fields: [classroomId], references: [id])
+  submissions HomeworkSubmission[]
+
+  @@index([classroomId])
+}
+
+model HomeworkSubmission {
+  id          String    @id @default(cuid())
+  homeworkId  String
+  studentId   String
+  score       Float?
+  maxScore    Float?
+  submittedAt DateTime?
+  feedback    String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  homework Homework @relation(fields: [homeworkId], references: [id], onDelete: Cascade)
+  student  Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([homeworkId, studentId])
+  @@index([studentId])
+}
+
+model QuizResult {
+  id        String   @id @default(cuid())
+  quizName  String
+  score     Float
+  maxScore  Float
+   needsSupport Boolean  @default(false)
+  takenAt   DateTime @default(now())
+  studentId String
+  createdAt DateTime @default(now())
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId, takenAt])
+}
+
+ 
+model StudentProctorAssignment {
+  studentId  String   @id
+  teacherId  String
+  assignedAt DateTime @default(now())
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacher User    @relation("StudentProctor", fields: [teacherId], references: [id], onDelete: Restrict)
+
+  @@index([teacherId])
+}
