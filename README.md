@@ -3,6 +3,9 @@
 
 ### AI-Powered Education Management & Learning Analytics
 
+
+[***View Live Application (https://grade-lens-ai-six.vercel.app)***](https://grade-lens-ai-six.vercel.app)
+
 **A full-stack platform for managing classrooms, student records,
 homework submissions, quiz performance, and AI-assisted educational
 insights.**
@@ -268,7 +271,7 @@ GradeLens-AI/
 Replace the placeholder with the actual GradeLens AI repository URL:
 
 ``` bash
-git clone <YOUR_REPOSITORY_URL>
+git clone <https://github.com/sunny-raj-sah/GradeLens-AI.git>
 cd GradeLens-AI
 ```
 

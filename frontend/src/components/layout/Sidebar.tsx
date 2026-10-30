@@ -35,7 +35,7 @@ const studentNavigation = [
   },
 ]
 
-const staffNavigation = [
+const adminNavigation = [
   {
     label: 'Dashboard',
     path: '/dashboard',
@@ -83,18 +83,74 @@ const staffNavigation = [
   },
 ]
 
+const teacherNavigation = [
+  {
+    label: 'Dashboard',
+    path: '/dashboard',
+    icon: LayoutDashboard,
+  },
+  {
+    label: 'Classrooms',
+    path: '/classrooms',
+    icon: School,
+  },
+  {
+    label: 'Students',
+    path: '/students',
+    icon: Users,
+  },
+  {
+    label: 'Homework',
+    path: '/homework',
+    icon: ClipboardList,
+  },
+  {
+    label: 'Submissions',
+    path: '/submissions',
+    icon: FileCheck,
+  },
+  {
+    label: 'Quiz Results',
+    path: '/quiz-results',
+    icon: BookOpen,
+  },
+  {
+    label: 'Analytics',
+    path: '/analytics',
+    icon: ChartNoAxesCombined,
+  },
+  {
+    label: 'AI Assistant',
+    path: '/ai-assistant',
+    icon: Bot,
+  },
+]
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const { user } = useAuth()
 
-  const isStudent = user?.role === 'STUDENT'
-  const isStaff = user?.role === 'ADMIN' || user?.role === 'TEACHER'
+  // const isStudent = user?.role === 'STUDENT'
+  // const isStaff = user?.role === 'ADMIN' || user?.role === 'TEACHER'
 
-  // Do not expose staff navigation to unknown or unsupported roles.
-  const visibleNavigation = isStudent
-    ? studentNavigation
-    : isStaff
-      ? staffNavigation
-      : []
+  // // Do not expose staff navigation to unknown or unsupported roles.
+  // const visibleNavigation = isStudent
+  //   ? studentNavigation
+  //   : isStaff
+  //     ? staffNavigation
+  //     : []
+
+  // Normalize role to handle values like "Teacher", "TEACHER", or "teacher".
+const userRole = String(user?.role ?? '')
+  .trim()
+  .toUpperCase()
+
+const visibleNavigation =
+  userRole === 'ADMIN'
+    ? adminNavigation
+    : userRole === 'TEACHER'
+      ? teacherNavigation
+      : userRole === 'STUDENT'
+        ? studentNavigation
+        : []
 
   return (
     <>

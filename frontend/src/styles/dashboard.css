@@ -1,4 +1,3 @@
- 
 :root {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
@@ -437,11 +436,12 @@ button {
     transition-duration: 0.01ms !important;
   }
 }
+
 /* ---------------------------- */
 /* for the floating FloatingAIAssistant.tsx */
 
 /* Floating GradeLens AI assistant */
- 
+
 /* =========================================
    FloatingAIAssistant.tsx
    GradeLens AI Floating Chat Widget
@@ -451,20 +451,25 @@ button {
   --gl-ai-blue: #315fce;
   --gl-ai-blue-dark: #244ca9;
   --gl-ai-border: #e5eaf2;
+  --gl-ai-gap: 24px;
 
   position: fixed;
-  right: 24px;
-  bottom: 24px;
+  right: calc(var(--gl-ai-gap) + env(safe-area-inset-right, 0px));
+  bottom: calc(var(--gl-ai-gap) + env(safe-area-inset-bottom, 0px));
   left: auto;
   z-index: 1080;
+
   font-size: 14px;
+  line-height: 1.5;
 }
 
-/* Floating AI button */
+/* ---------- Floating button ---------- */
 
 .gl-ai-fab {
+  position: relative;
   width: 58px;
   height: 58px;
+  padding: 0;
   border: none;
   border-radius: 18px;
 
@@ -474,25 +479,36 @@ button {
 
   color: #fff;
   background: linear-gradient(145deg, #4779e8, #2853b8);
-  box-shadow: 0 6px 20px rgb(49 95 206 / 25%);
+  box-shadow:
+    0 8px 22px rgb(49 95 206 / 30%),
+    inset 0 1px 0 rgb(255 255 255 / 22%);
 
   cursor: pointer;
-  transition: transform 180ms ease, box-shadow 180ms ease;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .gl-ai-fab:hover {
   transform: translateY(-2px);
-  box-shadow: 0 9px 24px rgb(49 95 206 / 32%);
+  box-shadow:
+    0 12px 28px rgb(49 95 206 / 38%),
+    inset 0 1px 0 rgb(255 255 255 / 22%);
+}
+
+.gl-ai-fab:active {
+  transform: translateY(0) scale(0.96);
 }
 
 .gl-ai-fab:focus-visible,
 .gl-ai-icon-button:focus-visible,
-.gl-ai-send:focus-visible {
-  outline: 3px solid rgb(49 95 206 / 35%);
-  outline-offset: 3px;
+.gl-ai-send:focus-visible,
+.gl-ai-suggestion:focus-visible {
+  outline: 3px solid rgb(49 95 206 / 40%);
+  outline-offset: 2px;
 }
 
-/* Chat panel */
+/* ---------- Chat panel ---------- */
 
 .gl-ai-panel {
   position: absolute;
@@ -500,9 +516,9 @@ button {
   bottom: 72px;
   left: auto;
 
-  width: min(390px, calc(100vw - 32px));
-  height: min(570px, 72dvh);
-  min-height: 360px;
+  width: min(400px, calc(100vw - 32px));
+  height: min(600px, 74dvh);
+  min-height: 380px;
   max-height: calc(100dvh - 110px);
 
   display: flex;
@@ -515,16 +531,17 @@ button {
   border-radius: 20px;
 
   box-shadow:
-    0 16px 48px rgb(26 43 76 / 14%),
-    0 3px 10px rgb(26 43 76 / 5%);
+    0 20px 56px rgb(26 43 76 / 18%),
+    0 4px 12px rgb(26 43 76 / 6%);
 
-  animation: gl-ai-panel-enter 180ms ease-out;
+  transform-origin: bottom right;
+  animation: gl-ai-panel-enter 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 @keyframes gl-ai-panel-enter {
   from {
     opacity: 0;
-    transform: translateY(8px) scale(0.985);
+    transform: translateY(10px) scale(0.97);
   }
 
   to {
@@ -533,12 +550,12 @@ button {
   }
 }
 
-/* Header */
+/* ---------- Header ---------- */
 
 .gl-ai-header {
   flex-shrink: 0;
-  min-height: 72px;
-  padding: 14px 17px;
+  min-height: 68px;
+  padding: 12px 14px 12px 16px;
 
   display: flex;
   align-items: center;
@@ -549,35 +566,50 @@ button {
   background: linear-gradient(120deg, #315fce, #294eaa);
 }
 
+.gl-ai-header > div:first-child {
+  min-width: 0;
+}
+
 .gl-ai-avatar {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
-  border: 1px solid rgb(255 255 255 / 18%);
-  border-radius: 13px;
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 12px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
   color: #fff;
-  background: rgb(255 255 255 / 14%);
+  background: rgb(255 255 255 / 15%);
 }
 
 .gl-ai-header .fw-semibold {
+  overflow: hidden;
   font-size: 15px;
   letter-spacing: -0.2px;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .gl-ai-subtitle {
   margin-top: 2px;
-  color: rgb(255 255 255 / 78%);
-  font-size: 11px;
+  overflow: hidden;
+
+  color: rgb(255 255 255 / 80%);
+  font-size: 11.5px;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .gl-ai-icon-button {
-  width: 35px;
-  height: 35px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  flex-shrink: 0;
   border: none;
   border-radius: 10px;
 
@@ -588,18 +620,24 @@ button {
   color: rgb(255 255 255 / 90%);
   background: transparent;
   cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
 }
 
-.gl-ai-icon-button:hover {
+.gl-ai-icon-button:hover:not(:disabled) {
   color: #fff;
-  background: rgb(255 255 255 / 15%);
+  background: rgb(255 255 255 / 16%);
 }
 
-/* Classroom selector */
+.gl-ai-icon-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ---------- Classroom selector ---------- */
 
 .gl-ai-classroom {
   flex-shrink: 0;
-  padding: 12px 16px;
+  padding: 10px 16px 12px;
 
   background: var(--bs-tertiary-bg, #f8faff);
   border-bottom: 1px solid var(--bs-border-color, var(--gl-ai-border));
@@ -607,29 +645,34 @@ button {
 
 .gl-ai-classroom .form-label {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 
   color: var(--bs-secondary-color, #697586);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
-  letter-spacing: 0.45px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
 }
 
 .gl-ai-classroom .form-select {
-  min-height: 39px;
+  width: 100%;
+  min-height: 40px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+
   border-color: var(--bs-border-color, #dce3ef);
   border-radius: 10px;
   font-size: 13px;
   box-shadow: none;
+  text-overflow: ellipsis;
 }
 
 .gl-ai-classroom .form-select:focus {
   border-color: #8eacee;
-  box-shadow: 0 0 0 3px rgb(49 95 206 / 10%);
+  box-shadow: 0 0 0 3px rgb(49 95 206 / 12%);
 }
 
-/* Conversation area */
+/* ---------- Conversation area ---------- */
 
 .gl-ai-messages {
   flex: 1 1 auto;
@@ -639,11 +682,11 @@ button {
   overflow-y: auto;
   overscroll-behavior: contain;
 
-  padding: 18px 16px;
+  padding: 16px;
 
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 
   background: var(--bs-body-bg, #fff);
   scroll-behavior: smooth;
@@ -652,7 +695,7 @@ button {
 }
 
 .gl-ai-messages::-webkit-scrollbar {
-  width: 5px;
+  width: 6px;
 }
 
 .gl-ai-messages::-webkit-scrollbar-thumb {
@@ -660,22 +703,22 @@ button {
   background: #c8d2e2;
 }
 
-/* Welcome screen */
+/* ---------- Welcome screen ---------- */
 
 .gl-ai-welcome {
   width: 100%;
   margin: auto 0;
-  padding: 12px 2px;
+  padding: 8px 0;
   text-align: center;
 }
 
 .gl-ai-welcome-icon {
-  width: 52px;
-  height: 52px;
+  width: 54px;
+  height: 54px;
   margin: 0 auto 14px;
 
   border: 1px solid #e0e9ff;
-  border-radius: 17px;
+  border-radius: 18px;
 
   display: flex;
   align-items: center;
@@ -686,7 +729,7 @@ button {
 }
 
 .gl-ai-welcome h6 {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-size: 17px;
   font-weight: 700;
   letter-spacing: -0.3px;
@@ -694,21 +737,21 @@ button {
 
 .gl-ai-welcome p {
   max-width: 300px;
-  margin: 0 auto 18px;
+  margin: 0 auto 16px;
 
   color: var(--bs-secondary-color, #707b8d);
   font-size: 12.5px;
-  line-height: 1.7;
+  line-height: 1.65;
 }
 
 .gl-ai-suggestion {
   display: block;
   width: 100%;
-  margin-top: 9px;
-  padding: 11px 12px;
+  margin-top: 8px;
+  padding: 11px 13px;
 
   border: 1px solid var(--bs-border-color, #e4e9f1);
-  border-radius: 11px;
+  border-radius: 12px;
 
   color: var(--bs-body-color, #354258);
   background: var(--bs-body-bg, #fff);
@@ -717,23 +760,32 @@ button {
   line-height: 1.5;
 
   cursor: pointer;
-  transition: border-color 150ms ease, background 150ms ease;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease,
+    transform 150ms ease;
 }
 
-.gl-ai-suggestion:hover {
+.gl-ai-suggestion:hover:not(:disabled) {
   border-color: #b7c9f4;
-  background: #f5f8ff;
+  background: var(--bs-primary-bg-subtle, #f5f8ff);
+  transform: translateY(-1px);
 }
 
-/* Message bubbles */
+.gl-ai-suggestion:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* ---------- Message bubbles ---------- */
 
 .gl-ai-message {
-  max-width: 90%;
-  padding: 11px 13px;
-  border-radius: 14px;
+  max-width: 88%;
+  padding: 10px 13px;
+  border-radius: 16px;
 
   font-size: 13px;
-  line-height: 1.7;
+  line-height: 1.65;
 
   white-space: pre-wrap;
   overflow-wrap: anywhere;
@@ -757,16 +809,24 @@ button {
 }
 
 .gl-ai-typing {
+  align-self: flex-start;
   display: flex;
   align-items: center;
   gap: 9px;
 
+  padding: 9px 13px;
+  border: 1px solid var(--bs-border-color, #e8ecf3);
+  border-radius: 14px;
+  border-bottom-left-radius: 5px;
+
   color: var(--bs-secondary-color, #707b8d);
+  background: var(--bs-tertiary-bg, #f5f7fb);
   font-size: 12px;
 }
 
 .gl-ai-spinner {
   flex-shrink: 0;
+  color: var(--gl-ai-blue);
   animation: gl-ai-spin 1s linear infinite;
 }
 
@@ -776,12 +836,12 @@ button {
   }
 }
 
-/* Error message */
+/* ---------- Error ---------- */
 
 .gl-ai-error {
   flex-shrink: 0;
   margin: 0 14px 8px;
-  padding: 10px 12px;
+  padding: 9px 12px;
 
   border: 1px solid #f1c6cb;
   border-radius: 10px;
@@ -790,42 +850,48 @@ button {
   background: #fff1f2;
   font-size: 12px;
   line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
-/* Input composer */
+/* ---------- Composer ---------- */
 
 .gl-ai-composer {
   flex-shrink: 0;
-  padding: 12px 14px 10px;
+  padding: 10px 14px 8px;
 
   display: flex;
-  align-items: center;
-  gap: 9px;
+  align-items: flex-end;
+  gap: 8px;
 
   border-top: 1px solid var(--bs-border-color, var(--gl-ai-border));
   background: var(--bs-body-bg, #fff);
 }
 
 .gl-ai-composer .form-control {
+  flex: 1 1 auto;
   min-width: 0;
   min-height: 44px;
+  max-height: 120px;
   padding: 10px 13px;
 
   border: 1px solid var(--bs-border-color, #dce3ef);
   border-radius: 12px;
 
   font-size: 13px;
+  line-height: 1.5;
   box-shadow: none;
+  resize: none;
 }
 
 .gl-ai-composer .form-control:focus {
   border-color: #8eacee;
-  box-shadow: 0 0 0 3px rgb(49 95 206 / 10%);
+  box-shadow: 0 0 0 3px rgb(49 95 206 / 12%);
 }
 
 .gl-ai-send {
   width: 44px;
   height: 44px;
+  padding: 0;
   flex-shrink: 0;
   border: none;
   border-radius: 12px;
@@ -836,51 +902,58 @@ button {
 
   color: #fff;
   background: var(--gl-ai-blue);
+  box-shadow: 0 4px 12px rgb(49 95 206 / 25%);
+
   cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    transform 150ms ease;
 }
 
 .gl-ai-send:hover:not(:disabled) {
   background: var(--gl-ai-blue-dark);
 }
 
+.gl-ai-send:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
 .gl-ai-send:disabled {
   cursor: not-allowed;
+  box-shadow: none;
   opacity: 0.45;
 }
 
-/* Footer */
+/* ---------- Footer ---------- */
 
 .gl-ai-footer {
   flex-shrink: 0;
-  padding: 0 12px 10px;
+  padding: 0 14px 10px;
 
   color: var(--bs-secondary-color, #818b9a);
   background: var(--bs-body-bg, #fff);
-  font-size: 10px;
+  font-size: 10.5px;
   text-align: center;
 }
 
-/* Tablet */
+/* ---------- Tablet ---------- */
 
 @media (max-width: 991.98px) {
   .gl-floating-ai {
-    right: 18px;
-    bottom: 18px;
-    left: auto;
+    --gl-ai-gap: 18px;
   }
 
   .gl-ai-panel {
-    width: min(390px, calc(100vw - 36px));
-    height: min(550px, 70dvh);
+    width: min(400px, calc(100vw - 36px));
+    height: min(580px, 74dvh);
   }
 }
 
-/* Mobile */
+/* ---------- Mobile: larger, roomier chat ---------- */
 
 @media (max-width: 480px) {
   .gl-floating-ai {
-    right: 12px;
-    bottom: 12px;
+    --gl-ai-gap: 12px;
   }
 
   .gl-ai-fab {
@@ -890,22 +963,58 @@ button {
   }
 
   .gl-ai-panel {
-    right: 0;
     bottom: 66px;
 
     width: calc(100vw - 24px);
-    height: min(520px, 68dvh);
+    height: calc(100dvh - 110px);
     min-height: 320px;
+    max-height: calc(100dvh - 90px);
 
-    border-radius: 17px;
+    border-radius: 18px;
+  }
+
+  .gl-ai-header {
+    min-height: 62px;
+    padding: 10px 10px 10px 14px;
+  }
+
+  .gl-ai-classroom {
+    padding: 8px 14px 10px;
   }
 
   .gl-ai-messages {
     padding: 14px 12px;
   }
+
+  .gl-ai-message {
+    max-width: 92%;
+  }
+
+  /* 16px prevents iOS Safari from zooming when an input is focused */
+  .gl-ai-composer .form-control,
+  .gl-ai-classroom .form-select {
+    font-size: 16px;
+  }
+
+  .gl-ai-composer {
+    padding: 10px 12px 6px;
+  }
+
+  .gl-ai-footer {
+    padding-bottom: 8px;
+  }
 }
 
-/* Accessibility */
+/* Short landscape screens */
+
+@media (max-height: 520px) {
+  .gl-ai-panel {
+    min-height: 0;
+    height: calc(100dvh - 90px);
+  }
+}
+
+/* ---------- Accessibility ---------- */
 
 @media (prefers-reduced-motion: reduce) {
   .gl-ai-panel {
@@ -917,5 +1026,9 @@ button {
   .gl-ai-suggestion,
   .gl-ai-send {
     transition: none;
+  }
+
+  .gl-ai-spinner {
+    animation-duration: 2s;
   }
 }
