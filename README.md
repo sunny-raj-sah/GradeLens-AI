@@ -1,4 +1,3 @@
-::: {align="center"}
 # GradeLens AI
 
 ### AI-Powered Education Management & Learning Analytics
