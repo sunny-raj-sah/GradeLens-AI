@@ -671,7 +671,7 @@ accordingly.
 
 ------------------------------------------------------------------------
 
-::: {align="center"}
+ 
 **GradeLens AI** · Built with React, TypeScript, Node.js, PostgreSQL,
 Prisma, and Groq.
-:::
+ 
